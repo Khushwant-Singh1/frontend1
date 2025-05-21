@@ -5,61 +5,13 @@ import { Input } from "@/components/ui/input"
 import { Card } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { FreelancerCard } from "@/components/freelancer-card"
+import { useFreelancersQuery } from "@/hooks/use-queries"
 
 export default function FreelancersPage() {
-  // Mock data for freelancers
-  const freelancers = [
-    {
-      id: "1",
-      name: "Alex Johnson",
-      title: "UI/UX Designer",
-      rating: 4.9,
-      completedProjects: 78,
-      hourlyRate: "$45",
-      skills: ["UI Design", "Wireframing", "Figma", "Adobe XD"],
-      avatar: "/placeholder.svg?height=100&width=100",
-    },
-    {
-      id: "2",
-      name: "Sarah Williams",
-      title: "Full Stack Developer",
-      rating: 4.8,
-      completedProjects: 64,
-      hourlyRate: "$55",
-      skills: ["React", "Node.js", "MongoDB", "TypeScript"],
-      avatar: "/placeholder.svg?height=100&width=100",
-    },
-    {
-      id: "3",
-      name: "Michael Chen",
-      title: "Graphic Designer",
-      rating: 4.7,
-      completedProjects: 92,
-      hourlyRate: "$40",
-      skills: ["Illustrator", "Photoshop", "Branding", "Logo Design"],
-      avatar: "/placeholder.svg?height=100&width=100",
-    },
-    {
-      id: "4",
-      name: "Emily Rodriguez",
-      title: "Content Writer",
-      rating: 4.9,
-      completedProjects: 51,
-      hourlyRate: "$35",
-      skills: ["Blog Writing", "SEO", "Copywriting", "Editing"],
-      avatar: "/placeholder.svg?height=100&width=100",
-    },
-    {
-      id: "5",
-      name: "David Kim",
-      title: "Mobile App Developer",
-      rating: 4.6,
-      completedProjects: 43,
-      hourlyRate: "$60",
-      skills: ["React Native", "Swift", "Kotlin", "Firebase"],
-      avatar: "/placeholder.svg?height=100&width=100",
-    },
-  ]
+  const { data: freelancers, isLoading, isError } = useFreelancersQuery()
+
+  if (isLoading) return <div className="container py-8">Loading freelancers...</div>
+  if (isError) return <div className="container py-8 text-red-500">Failed to load freelancers.</div>
 
   return (
     <div className="container py-8 md:py-12">
@@ -162,8 +114,8 @@ export default function FreelancersPage() {
         </div>
 
         <div className="md:w-3/4">
-          <div className="space-y-4">
-            {freelancers.map((freelancer) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {freelancers?.map((freelancer: any) => (
               <FreelancerCard key={freelancer.id} freelancer={freelancer} />
             ))}
           </div>

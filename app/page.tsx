@@ -55,15 +55,6 @@ export default function Home() {
     return () => clearInterval(interval)
   }, [])
 
-  // Add points when user visits homepage (demo purposes)
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      addPoints(5, "Exploring the platform")
-    }, 3000)
-
-    return () => clearTimeout(timer)
-  }, [addPoints])
-
   // Detect scroll for animations
   useEffect(() => {
     const handleScroll = () => {
@@ -166,7 +157,11 @@ export default function Home() {
                     animate={heroInView ? { y: 0 } : { y: 100 }}
                     transition={{ duration: 0.8, ease: [0.33, 1, 0.68, 1] }}
                   >
-                    <GradientText animate={true} gradient="from-purple-400 via-indigo-400 to-purple-400">
+                    <GradientText
+                      text="Where Creativity Meets Opportunity"
+                      animate={true}
+                      gradient="from-purple-400 via-indigo-400 to-purple-400"
+                    >
                       Where Creativity Meets Opportunity
                     </GradientText>
                   </motion.h1>
@@ -272,11 +267,10 @@ export default function Home() {
 
                 {/* Floating badges */}
                 <motion.div
-                  className="absolute -left-10 top-1/4 glass-modern p-3 rounded-xl shadow-lg z-20 flex items-center gap-2"
+                  className="absolute -left-10 top-1/4 glass-modern p-3 rounded-xl shadow-lg z-20 flex items-center gap-2 animate-float-slow"
                   initial={{ x: -50, opacity: 0 }}
                   animate={heroInView ? { x: 0, opacity: 1 } : { x: -50, opacity: 0 }}
                   transition={{ delay: 0.6, duration: 0.5 }}
-                  className="animate-float-slow"
                   style={{
                     x: calculateParallaxPosition(-25).x,
                     y: calculateParallaxPosition(-25).y,
@@ -294,11 +288,10 @@ export default function Home() {
                 </motion.div>
 
                 <motion.div
-                  className="absolute -right-10 bottom-1/4 glass-modern p-3 rounded-xl shadow-lg z-20"
+                  className="absolute -right-10 bottom-1/4 glass-modern p-3 rounded-xl shadow-lg z-20 animate-float-slow"
                   initial={{ x: 50, opacity: 0 }}
                   animate={heroInView ? { x: 0, opacity: 1 } : { x: 50, opacity: 0 }}
                   transition={{ delay: 0.8, duration: 0.5 }}
-                  className="animate-float-slow"
                   style={{
                     x: calculateParallaxPosition(25).x,
                     y: calculateParallaxPosition(25).y,
@@ -376,7 +369,11 @@ export default function Home() {
                     animate={featuresInView ? { y: 0 } : { y: 100 }}
                     transition={{ duration: 0.8, ease: [0.33, 1, 0.68, 1] }}
                   >
-                    <GradientText animate={true} gradient="from-purple-400 via-indigo-400 to-purple-400">
+                    <GradientText
+                      text="How CreoTask Works"
+                      animate={true}
+                      gradient="from-purple-400 via-indigo-400 to-purple-400"
+                    >
                       How CreoTask Works
                     </GradientText>
                   </motion.h2>
@@ -537,7 +534,11 @@ export default function Home() {
                     animate={ctaInView ? { y: 0 } : { y: 100 }}
                     transition={{ duration: 0.8, ease: [0.33, 1, 0.68, 1] }}
                   >
-                    <GradientText animate={true} gradient="from-purple-400 via-indigo-400 to-purple-400">
+                    <GradientText
+                      text="Ready to Get Started?"
+                      animate={true}
+                      gradient="from-purple-400 via-indigo-400 to-purple-400"
+                    >
                       Ready to Get Started?
                     </GradientText>
                   </motion.h2>

@@ -25,6 +25,8 @@ export async function GET(request: NextRequest) {
         profile: {
           select: {
             id: true,
+            title: true,
+            location: true,
             bio: true,
             skills: true,
             portfolio: true,
@@ -32,7 +34,7 @@ export async function GET(request: NextRequest) {
             // level: true,
             // streak: true,
             // endorsements: true,
-            achievement: {
+            achievements: {
               select: {
                 id: true,
                 title: true,
@@ -73,6 +75,7 @@ export async function PUT(request: NextRequest) {
       );
     }
     const updatedData = await request.json();
+    console.log('Received updatedData:', updatedData); // DEBUG
     // Separate user and profile fields
     const userFields: any = {};
     const profileFields: any = {};
@@ -85,6 +88,8 @@ export async function PUT(request: NextRequest) {
     if (typeof updatedData.level === 'number') profileFields.level = updatedData.level;
     if (typeof updatedData.streak === 'number') profileFields.streak = updatedData.streak;
     if (Array.isArray(updatedData.endorsements)) profileFields.endorsements = updatedData.endorsements;
+    if (typeof updatedData.title === 'string') profileFields.title = updatedData.title;
+    if (typeof updatedData.location === 'string') profileFields.location = updatedData.location;
     // Update user
     if (Object.keys(userFields).length > 0) {
       await prisma.user.update({
@@ -134,6 +139,8 @@ export async function PUT(request: NextRequest) {
         profile: {
           select: {
             id: true,
+            title: true,
+            location: true,
             bio: true,
             skills: true,
             portfolio: true,
@@ -141,7 +148,7 @@ export async function PUT(request: NextRequest) {
             // level: true,
             // streak: true,
             // endorsements: true,
-            achievement: {
+            achievements: {
               select: {
                 id: true,
                 title: true,

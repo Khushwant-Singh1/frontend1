@@ -13,50 +13,24 @@ import { Progress } from "@/components/ui/progress"
 import { useGamification } from "@/components/gamification/gamification-provider"
 import { DailyStreakCard } from "@/components/gamification/daily-streak-card"
 import { AchievementCard } from "@/components/gamification/achievement-card"
+import { useContestsQuery } from "@/hooks/use-queries"
 
 export default function DashboardPage() {
   const { points, level, achievements, addPoints } = useGamification()
+  interface Contest {
+    id: string
+    title: string
+    submissions: number
+    deadline: string
+    budget: string
+  }
+
+  const { data: activeContests = [], isLoading: loadingContests } = useContestsQuery()
+
+  // For demo: submissions could be fetched with another query if backend supports
+  // const { data: recentSubmissions = [], isLoading: loadingSubmissions } = useSubmissionsQuery()
+
   const [showWelcome, setShowWelcome] = useState(true)
-  
-  // Mock data for active contests
-  const activeContests = [
-    {
-      id: "1",
-      title: "Logo Design for Tech Startup",
-      submissions: 24,
-      deadline: "3 days left",
-      budget: "$500"
-    },
-    {
-      id: "2",
-      title: "Website Redesign Project",
-      submissions: 18,
-      deadline: "5 days left",
-      budget: "$1,200"
-    }
-  ]
-  
-  // Mock data for recent submissions
-  const recentSubmissions = [
-    {
-      id: "1",
-      contestTitle: "Mobile App UI Design",
-      date: "Yesterday",
-      status: "Under Review"
-    },
-    {
-      id: "2",
-      contestTitle: "Brand Identity Package",
-      date: "3 days ago",
-      status: "Winner Selected"
-    },
-    {
-      id: "3",
-      contestTitle: "Marketing Materials Design",
-      date: "1 week ago",
-      status: "Completed"
-    }
-  ]
 
   // Hide welcome message after 5 seconds
   useEffect(() => {
@@ -72,6 +46,8 @@ export default function DashboardPage() {
     addPoints(10, "Exploring new opportunities")
   }
 
+  if (loadingContests) return <div className="container py-8">Loading dashboard...</div>
+
   return (
     <div className="container py-8">
       {showWelcome && (
@@ -80,24 +56,9 @@ export default function DashboardPage() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
+          transition={{ duration: 0.5 }}
         >
-          <div className="flex items-center gap-3">
-            <div className="flex items-center justify-center h-10 w-10 rounded-full bg-white/20">
-              <Zap className="h-5 w-5" />
-            </div>
-            <div>
-              <h2 className="font-bold">Welcome back, Alex!</h2>
-              <p className="text-sm opacity-90">You have 2 active contests and 3 new notifications</p>
-            </div>
-            <Button
-              variant="outline"
-              size="sm"
-              className="ml-auto text-white border-white/30 hover:bg-white/20 hover:text-white"
-              onClick={() => setShowWelcome(false)}
-            >
-              Dismiss
-            </Button>
-          </div>
+          Welcome back! Ready to win new contests?
         </motion.div>
       )}
 
@@ -206,13 +167,12 @@ export default function DashboardPage() {
         >
           <Card>
             <CardHeader>
-              <CardTitle>Active Contests</CardTitle>
               <CardDescription>Contests you're currently participating in</CardDescription>
             </CardHeader>
             <CardContent>
               {activeContests.length > 0 ? (
                 <div className="space-y-4">
-                  {activeContests.map((contest) => (
+                  {activeContests.map((contest: Contest) => (
                     <div
                       key={contest.id}
                       className="flex items-center justify-between p-4 border rounded-lg hover:border-purple-200 dark:hover:border-purple-800 transition-colors group"
@@ -268,7 +228,7 @@ export default function DashboardPage() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {recentSubmissions.map((submission) => (
+                {/* {recentSubmissions.map((submission) => (
                   <div
                     key={submission.id}
                     className="flex items-center justify-between p-4 border rounded-lg hover:border-purple-200 dark:hover:border-purple-800 transition-colors group"
@@ -297,7 +257,7 @@ export default function DashboardPage() {
                       {submission.status}
                     </Badge>
                   </div>
-                ))}
+                ))} */}
               </div>
             </CardContent>
           </Card>

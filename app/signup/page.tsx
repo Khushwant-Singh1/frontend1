@@ -18,6 +18,7 @@ import { useToast } from "@/components/ui/use-toast"
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
 import { signupSchema, type SignupFormData } from "@/lib/validations/auth"
 import { Checkbox } from "@/components/ui/checkbox"
+import { useSignupMutation } from "@/hooks/use-mutations"
 
 export default function SignupPage() {
   const router = useRouter()
@@ -40,6 +41,8 @@ export default function SignupPage() {
     }
   })
 
+  const signupMutation = useSignupMutation();
+
   // Update the role when account type changes
   const handleAccountTypeChange = (value: string) => {
     setAccountType(value as "freelancer" | "client")
@@ -51,28 +54,15 @@ export default function SignupPage() {
   }
 
   const onSubmit = async (data: SignupFormData) => {
-    setIsLoading(true)
-    
+    setIsLoading(true);
     try {
-      // First create the user account
-      const response = await fetch('/api/auth/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: data.name,
-          email: data.email,
-          password: data.password,
-          role: data.role,
-        }),
-      })
-
-      const responseData = await response.json()
-
-      if (!response.ok) {
-        throw new Error(responseData.error || 'Something went wrong')
-      }
+      // Use TanStack Query mutation
+      const responseData = await signupMutation.mutateAsync({
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        role: data.role,
+      });
 
       // Then sign them in automatically using Auth.js
       const signInResult = await signIn("credentials", {

@@ -6,6 +6,7 @@ import Header from "@/components/header"
 import Footer from "@/components/footer"
 import { GamificationProvider } from "@/components/gamification/gamification-provider"
 import { Toaster } from "@/components/ui/toaster"
+import { ReactQueryProvider } from "@/components/react-query-provider"
 import "./globals.css"
 
 // Font definitions
@@ -40,12 +41,14 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           <AuthProvider>
             <GamificationProvider>
-              <div className="flex min-h-screen flex-col bg-gradient-to-b from-background to-background/80">
-                <Header />
-                <main className="flex-1">{children}</main>
-                <Footer />
-                <Toaster />
-              </div>
+              <ReactQueryProvider>
+                <div className="flex min-h-screen flex-col bg-gradient-to-b from-background to-background/80">
+                  <Header />
+                  <main className="flex-1">{children}</main>
+                  <Footer />
+                  <Toaster />
+                </div>
+              </ReactQueryProvider>
             </GamificationProvider>
           </AuthProvider>
         </ThemeProvider>

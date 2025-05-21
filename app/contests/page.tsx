@@ -6,86 +6,13 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/componen
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import { ContestCard } from "@/components/contest-card"
+import { useContestsQuery } from "@/hooks/use-queries"
 
 export default function ContestsPage() {
-  // Mock data for contests
-  const contests = [
-    {
-      id: "1",
-      title: "Modern Logo Design for Tech Startup",
-      description:
-        "Looking for a sleek, minimalist logo that represents innovation and growth for our AI-powered analytics platform.",
-      budget: "$500",
-      deadline: "5 days",
-      submissions: 12,
-      category: "Design",
-      client: {
-        name: "TechVision Inc.",
-        rating: 4.8,
-      },
-    },
-    {
-      id: "2",
-      title: "E-commerce Website Redesign",
-      description: "Need a complete overhaul of our online store to improve user experience and conversion rates.",
-      budget: "$1,500",
-      deadline: "14 days",
-      submissions: 8,
-      category: "Web Development",
-      client: {
-        name: "Fashion Forward",
-        rating: 4.5,
-      },
-    },
-    {
-      id: "3",
-      title: "Mobile App UI/UX Design",
-      description:
-        "Seeking creative designs for a fitness tracking app that motivates users and provides clear data visualization.",
-      budget: "$800",
-      deadline: "7 days",
-      submissions: 15,
-      category: "UI/UX",
-      client: {
-        name: "FitLife Solutions",
-        rating: 4.9,
-      },
-    },
-    {
-      id: "4",
-      title: "Content Writing for Blog Series",
-      description: "Looking for engaging, SEO-optimized articles about sustainable living and eco-friendly products.",
-      budget: "$300",
-      deadline: "10 days",
-      submissions: 6,
-      category: "Writing",
-      client: {
-        name: "EcoLife Magazine",
-        rating: 4.2,
-      },
-    },
-    {
-      id: "5",
-      title: "Product Packaging Design",
-      description:
-        "Need creative packaging designs for a new line of organic skincare products that stand out on shelves.",
-      budget: "$650",
-      deadline: "8 days",
-      submissions: 10,
-      category: "Design",
-      client: {
-        name: "Pure Organics",
-        rating: 4.7,
-      },
-    },
-  ]
+  const { data: contests, isLoading, isError } = useContestsQuery()
 
-  // Placeholder variables to resolve errors.  These would ideally be used in the component logic.
-  const SEO = ""
-  const optimized = ""
-  const articles = ""
-  const about = ""
-  const sustainable = ""
+  if (isLoading) return <div className="container py-8">Loading contests...</div>
+  if (isError) return <div className="container py-8 text-red-500">Failed to load contests.</div>
 
   return (
     <div className="container py-8 md:py-12">
@@ -200,9 +127,11 @@ export default function ContestsPage() {
         </div>
 
         <div className="md:col-span-3 space-y-6">
-          {contests.map((contest) => (
-            <ContestCard key={contest.id} contest={contest} />
-          ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {contests?.map((contest: any) => (
+              <ContestCard key={contest.id} contest={contest} />
+            ))}
+          </div>
         </div>
       </div>
     </div>
