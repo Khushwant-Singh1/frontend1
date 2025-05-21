@@ -23,61 +23,15 @@ import { Textarea } from "@/components/ui/textarea"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 import { cn } from "@/lib/utils"
 import { useToast } from "@/components/ui/use-toast"
-
-interface Endorsement {
-  id: string;
-  from: string;
-  skill: string;
-  message?: string;
-  name?: string;
-  avatar?: string;
-}
-
-interface PortfolioItem {
-  id: string;
-  title: string;
-  description: string;
-  image?: string;
-  link?: string;
-}
-
-interface SkillItem {
-  id: string;
-  name: string;
-  level: number;
-}
-
-interface ProfileData {
-  bio?: string;
-  skills?: SkillItem[];
-  portfolio?: PortfolioItem[];
-  endorsements?: Endorsement[];
-  achievements?: any[]; // Using any[] since we're using mock data
-  xp?: number;
-  level?: number;
-  streak?: number;
-  title?: string;
-  location?: string;
-}
-
-interface Profile {
-  id: string;
-  name: string;
-  title?: string;
-  location?: string;
-  avatar?: string;
-  role: "FREELANCER" | "CLIENT";
-  rating?: number;
-  reviewCount?: number;
-  profile?: ProfileData;
-}
-
-type EditData = Pick<Profile, 'name' | 'title' | 'location'> & Pick<ProfileData, 'bio'>
-
-interface XPAnimation {
-  amount: number;
-  isShowing: boolean;
-}
+import type {
+  Endorsement,
+  PortfolioItem,
+  SkillItem,
+  ProfileData,
+  Profile,
+  EditData,
+  XPAnimation
+} from "@/types/app"
 
 // Custom hook to fetch profile data
 

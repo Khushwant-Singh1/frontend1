@@ -4,20 +4,7 @@ import { Clock, DollarSign, Star, Users } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-
-interface Contest {
-  id: string
-  title: string
-  description: string
-  budget: string
-  deadline: string
-  submissions: number
-  category: string
-  client: {
-    name: string
-    rating: number
-  }
-}
+import type { Contest } from "@/types/app"
 
 interface ContestCardProps {
   contest: Contest
@@ -34,9 +21,9 @@ export function ContestCard({ contest }: ContestCardProps) {
           </div>
           <div className="flex items-center text-sm text-muted-foreground">
             <Star className="h-4 w-4 text-yellow-400 mr-1" />
-            <span>{contest.client.rating}</span>
+            <span>{contest.client?.rating ?? '-'}</span>
             <span className="mx-2">•</span>
-            <span>{contest.client.name}</span>
+            <span>{contest.client?.name ?? 'Unknown'}</span>
           </div>
         </div>
       </CardHeader>

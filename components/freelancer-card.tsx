@@ -5,17 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
-
-interface Freelancer {
-  id: string
-  name: string
-  title: string
-  rating: number
-  completedProjects: number
-  hourlyRate: string
-  skills: string[]
-  avatar: string
-}
+import type { Freelancer } from "@/types/app"
 
 interface FreelancerCardProps {
   freelancer: Freelancer

@@ -14,16 +14,10 @@ import { useGamification } from "@/components/gamification/gamification-provider
 import { DailyStreakCard } from "@/components/gamification/daily-streak-card"
 import { AchievementCard } from "@/components/gamification/achievement-card"
 import { useContestsQuery } from "@/hooks/use-queries"
+import type { Contest } from "@/types/app"
 
 export default function DashboardPage() {
   const { points, level, achievements, addPoints } = useGamification()
-  interface Contest {
-    id: string
-    title: string
-    submissions: number
-    deadline: string
-    budget: string
-  }
 
   const { data: activeContests = [], isLoading: loadingContests } = useContestsQuery()
 
