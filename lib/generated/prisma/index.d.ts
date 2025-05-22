@@ -2835,6 +2835,7 @@ export namespace Prisma {
     id: string | null
     userId: string | null
     bio: string | null
+    avatar: string | null
     xp: number | null
     level: number | null
     streak: number | null
@@ -2846,6 +2847,7 @@ export namespace Prisma {
     id: string | null
     userId: string | null
     bio: string | null
+    avatar: string | null
     xp: number | null
     level: number | null
     streak: number | null
@@ -2858,6 +2860,7 @@ export namespace Prisma {
     userId: number
     bio: number
     skills: number
+    avatar: number
     portfolio: number
     xp: number
     level: number
@@ -2885,6 +2888,7 @@ export namespace Prisma {
     id?: true
     userId?: true
     bio?: true
+    avatar?: true
     xp?: true
     level?: true
     streak?: true
@@ -2896,6 +2900,7 @@ export namespace Prisma {
     id?: true
     userId?: true
     bio?: true
+    avatar?: true
     xp?: true
     level?: true
     streak?: true
@@ -2908,6 +2913,7 @@ export namespace Prisma {
     userId?: true
     bio?: true
     skills?: true
+    avatar?: true
     portfolio?: true
     xp?: true
     level?: true
@@ -3009,6 +3015,7 @@ export namespace Prisma {
     userId: string
     bio: string | null
     skills: string[]
+    avatar: string | null
     portfolio: string[]
     xp: number
     level: number
@@ -3042,6 +3049,7 @@ export namespace Prisma {
     userId?: boolean
     bio?: boolean
     skills?: boolean
+    avatar?: boolean
     portfolio?: boolean
     xp?: boolean
     level?: boolean
@@ -3061,6 +3069,7 @@ export namespace Prisma {
     userId?: boolean
     bio?: boolean
     skills?: boolean
+    avatar?: boolean
     portfolio?: boolean
     xp?: boolean
     level?: boolean
@@ -3070,7 +3079,7 @@ export namespace Prisma {
     location?: boolean
   }
 
-  export type ProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "bio" | "skills" | "portfolio" | "xp" | "level" | "streak" | "endorsements" | "title" | "location", ExtArgs["result"]["profile"]>
+  export type ProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "bio" | "skills" | "avatar" | "portfolio" | "xp" | "level" | "streak" | "endorsements" | "title" | "location", ExtArgs["result"]["profile"]>
   export type ProfileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     achievements?: boolean | Profile$achievementsArgs<ExtArgs>
@@ -3088,6 +3097,7 @@ export namespace Prisma {
       userId: string
       bio: string | null
       skills: string[]
+      avatar: string | null
       portfolio: string[]
       xp: number
       level: number
@@ -3493,6 +3503,7 @@ export namespace Prisma {
     readonly userId: FieldRef<"Profile", 'String'>
     readonly bio: FieldRef<"Profile", 'String'>
     readonly skills: FieldRef<"Profile", 'String[]'>
+    readonly avatar: FieldRef<"Profile", 'String'>
     readonly portfolio: FieldRef<"Profile", 'String[]'>
     readonly xp: FieldRef<"Profile", 'Int'>
     readonly level: FieldRef<"Profile", 'Int'>
@@ -9969,6 +9980,7 @@ export namespace Prisma {
     userId: 'userId',
     bio: 'bio',
     skills: 'skills',
+    avatar: 'avatar',
     portfolio: 'portfolio',
     xp: 'xp',
     level: 'level',
@@ -10260,6 +10272,7 @@ export namespace Prisma {
     userId?: StringFilter<"Profile"> | string
     bio?: StringNullableFilter<"Profile"> | string | null
     skills?: StringNullableListFilter<"Profile">
+    avatar?: StringNullableFilter<"Profile"> | string | null
     portfolio?: StringNullableListFilter<"Profile">
     xp?: IntFilter<"Profile"> | number
     level?: IntFilter<"Profile"> | number
@@ -10276,6 +10289,7 @@ export namespace Prisma {
     userId?: SortOrder
     bio?: SortOrder
     skills?: SortOrder
+    avatar?: SortOrder
     portfolio?: SortOrder
     xp?: SortOrder
     level?: SortOrder
@@ -10295,6 +10309,7 @@ export namespace Prisma {
     NOT?: ProfileWhereInput | ProfileWhereInput[]
     bio?: StringNullableFilter<"Profile"> | string | null
     skills?: StringNullableListFilter<"Profile">
+    avatar?: StringNullableFilter<"Profile"> | string | null
     portfolio?: StringNullableListFilter<"Profile">
     xp?: IntFilter<"Profile"> | number
     level?: IntFilter<"Profile"> | number
@@ -10311,6 +10326,7 @@ export namespace Prisma {
     userId?: SortOrder
     bio?: SortOrder
     skills?: SortOrder
+    avatar?: SortOrder
     portfolio?: SortOrder
     xp?: SortOrder
     level?: SortOrder
@@ -10333,6 +10349,7 @@ export namespace Prisma {
     userId?: StringWithAggregatesFilter<"Profile"> | string
     bio?: StringNullableWithAggregatesFilter<"Profile"> | string | null
     skills?: StringNullableListFilter<"Profile">
+    avatar?: StringNullableWithAggregatesFilter<"Profile"> | string | null
     portfolio?: StringNullableListFilter<"Profile">
     xp?: IntWithAggregatesFilter<"Profile"> | number
     level?: IntWithAggregatesFilter<"Profile"> | number
@@ -10810,6 +10827,7 @@ export namespace Prisma {
     id?: string
     bio?: string | null
     skills?: ProfileCreateskillsInput | string[]
+    avatar?: string | null
     portfolio?: ProfileCreateportfolioInput | string[]
     xp?: number
     level?: number
@@ -10826,6 +10844,7 @@ export namespace Prisma {
     userId: string
     bio?: string | null
     skills?: ProfileCreateskillsInput | string[]
+    avatar?: string | null
     portfolio?: ProfileCreateportfolioInput | string[]
     xp?: number
     level?: number
@@ -10839,6 +10858,7 @@ export namespace Prisma {
   export type ProfileUpdateInput = {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: ProfileUpdateskillsInput | string[]
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio?: ProfileUpdateportfolioInput | string[]
     xp?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
@@ -10854,6 +10874,7 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: ProfileUpdateskillsInput | string[]
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio?: ProfileUpdateportfolioInput | string[]
     xp?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
@@ -10869,6 +10890,7 @@ export namespace Prisma {
     userId: string
     bio?: string | null
     skills?: ProfileCreateskillsInput | string[]
+    avatar?: string | null
     portfolio?: ProfileCreateportfolioInput | string[]
     xp?: number
     level?: number
@@ -10881,6 +10903,7 @@ export namespace Prisma {
   export type ProfileUpdateManyMutationInput = {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: ProfileUpdateskillsInput | string[]
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio?: ProfileUpdateportfolioInput | string[]
     xp?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
@@ -10894,6 +10917,7 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: ProfileUpdateskillsInput | string[]
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio?: ProfileUpdateportfolioInput | string[]
     xp?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
@@ -11485,6 +11509,7 @@ export namespace Prisma {
     userId?: SortOrder
     bio?: SortOrder
     skills?: SortOrder
+    avatar?: SortOrder
     portfolio?: SortOrder
     xp?: SortOrder
     level?: SortOrder
@@ -11504,6 +11529,7 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     bio?: SortOrder
+    avatar?: SortOrder
     xp?: SortOrder
     level?: SortOrder
     streak?: SortOrder
@@ -11515,6 +11541,7 @@ export namespace Prisma {
     id?: SortOrder
     userId?: SortOrder
     bio?: SortOrder
+    avatar?: SortOrder
     xp?: SortOrder
     level?: SortOrder
     streak?: SortOrder
@@ -12498,6 +12525,7 @@ export namespace Prisma {
     id?: string
     bio?: string | null
     skills?: ProfileCreateskillsInput | string[]
+    avatar?: string | null
     portfolio?: ProfileCreateportfolioInput | string[]
     xp?: number
     level?: number
@@ -12512,6 +12540,7 @@ export namespace Prisma {
     id?: string
     bio?: string | null
     skills?: ProfileCreateskillsInput | string[]
+    avatar?: string | null
     portfolio?: ProfileCreateportfolioInput | string[]
     xp?: number
     level?: number
@@ -12639,6 +12668,7 @@ export namespace Prisma {
   export type ProfileUpdateWithoutUserInput = {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: ProfileUpdateskillsInput | string[]
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio?: ProfileUpdateportfolioInput | string[]
     xp?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
@@ -12652,6 +12682,7 @@ export namespace Prisma {
   export type ProfileUncheckedUpdateWithoutUserInput = {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: ProfileUpdateskillsInput | string[]
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio?: ProfileUpdateportfolioInput | string[]
     xp?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
@@ -13384,6 +13415,7 @@ export namespace Prisma {
     id?: string
     bio?: string | null
     skills?: ProfileCreateskillsInput | string[]
+    avatar?: string | null
     portfolio?: ProfileCreateportfolioInput | string[]
     xp?: number
     level?: number
@@ -13399,6 +13431,7 @@ export namespace Prisma {
     userId: string
     bio?: string | null
     skills?: ProfileCreateskillsInput | string[]
+    avatar?: string | null
     portfolio?: ProfileCreateportfolioInput | string[]
     xp?: number
     level?: number
@@ -13427,6 +13460,7 @@ export namespace Prisma {
   export type ProfileUpdateWithoutAchievementsInput = {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: ProfileUpdateskillsInput | string[]
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio?: ProfileUpdateportfolioInput | string[]
     xp?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
@@ -13441,6 +13475,7 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: ProfileUpdateskillsInput | string[]
+    avatar?: NullableStringFieldUpdateOperationsInput | string | null
     portfolio?: ProfileUpdateportfolioInput | string[]
     xp?: IntFieldUpdateOperationsInput | number
     level?: IntFieldUpdateOperationsInput | number
