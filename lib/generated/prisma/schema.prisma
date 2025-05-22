@@ -37,6 +37,7 @@ model Profile {
   userId       String        @unique @db.ObjectId
   bio          String?
   skills       String[]
+  avatar       String?
   portfolio    String[]
   xp           Int           @default(0)
   level        Int           @default(1)

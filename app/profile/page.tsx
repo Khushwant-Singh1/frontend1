@@ -3,12 +3,13 @@
 import { useEffect, useState, useRef } from "react"
 import Image from "next/image"
 import { 
-  Award, Edit, MapPin, Star, CheckCircle, Lock, TrendingUp, 
-  Trophy, UserPlus, Zap, Sparkles, Shield, Target, 
-  Flame, BarChart2, Heart, Gift, ArrowUp
+  Award, CheckCircle, Edit, Flame, Heart, Lock, Loader2,
+  MapPin, Pencil, Sparkles, Star, Target, Trophy, TrendingUp, UserPlus, Zap,
+  BarChart2, Shield
 } from "lucide-react"
 import { motion, AnimatePresence, useAnimation } from "framer-motion"
 import { QueryClient, QueryClientProvider, useQuery } from '@tanstack/react-query'
+import { useInView } from 'react-intersection-observer';
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
@@ -17,8 +18,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
 import { useAuth } from "@/hooks/use-auth"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "@/components/ui/carousel"
 import { cn } from "@/lib/utils"
@@ -32,6 +34,8 @@ import type {
   EditData,
   XPAnimation
 } from "@/types/app"
+import { CloudinaryUploadWidget } from '@/components/cloudinary-upload-widget';
+import { useProfileUpdate } from '@/hooks/use-profile-update';
 
 // Custom hook to fetch profile data
 
@@ -42,8 +46,15 @@ export default function ProfilePage() {
   const [saving, setSaving] = useState(false)
   const [activeTab, setActiveTab] = useState("portfolio")
   const [editOpen, setEditOpen] = useState(false)
-  const [editData, setEditData] = useState<EditData>({ name: '', title: '', location: '', bio: '' })
-  const [isAnimating, setIsAnimating] = useState(false)
+  const [avatarUrl, setAvatarUrl] = useState("")
+  const [formData, setFormData] = useState({
+    name: "",
+    title: "",
+    location: "",
+    bio: "",
+    avatar: "" // Add avatar to formData
+  })
+  const { updateProfile, isUpdating } = useProfileUpdate()
   const [showConfetti, setShowConfetti] = useState(false)
   const [xpAnimation, setXpAnimation] = useState<XPAnimation>({ amount: 0, isShowing: false })
   const { toast } = useToast()
@@ -80,13 +91,13 @@ export default function ProfilePage() {
     setLoading(true)
     fetch("/api/auth/me")
       .then((res) => res.json())
-      .then((data) => {        
-        setProfile(data)
-        setEditData({
+      .then((data) => {          setProfile(data)
+        setFormData({
           name: data.name || '',
           title: data.profile?.title || '',
           location: data.profile?.location || '',
           bio: data.profile?.bio || '',
+          avatar: data.avatar || '',
         })
         setLoading(false)
       })
@@ -128,7 +139,7 @@ export default function ProfilePage() {
 
   // Helper: update both user and profile fields
   const handleEditChange = (field: keyof EditData, value: string) => {
-    setEditData((prev) => ({ ...prev, [field]: value }))
+    setFormData((prev) => ({ ...prev, [field]: value }))
   }
 
   // Show XP animation
@@ -140,38 +151,31 @@ export default function ProfilePage() {
   // Save profile changes with visual feedback
   const handleSaveChanges = async () => {
     setSaving(true)
+    
+    // Use the useProfileUpdate hook
     try {
-      const response = await fetch("/api/auth/me", {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: editData.name,
-          title: editData.title,
-          location: editData.location,
-          bio: editData.bio,
-          xp: (profile?.profile?.xp || 0) + 25, // Increment XP for updating profile
-          level: profile?.profile?.level || 1,
-          streak: profile?.profile?.streak || 0,
-        }),
-      })
-      
-      if (!response.ok) {
-        throw new Error("Failed to update profile")
-      }
-      
-      const updatedData = await response.json()
+      const result = await updateProfile.mutateAsync({
+        name: formData.name,
+        avatar: formData.avatar,
+        profile: {
+          title: formData.title,
+          location: formData.location,
+          bio: formData.bio
+        }
+      });
       
       // Update local state with the changes
       setProfile(prev => {
         if (!prev) return prev;
         return {
           ...prev,
-          name: editData.name,
+          name: formData.name,
+          avatar: formData.avatar, // Include avatar in the update
           profile: {
             ...(prev.profile || {}),
-            bio: editData.bio,
+            title: formData.title,
+            location: formData.location,
+            bio: formData.bio,
             xp: (prev.profile?.xp || 0) + 25,
           },
         };
@@ -192,12 +196,12 @@ export default function ProfilePage() {
       
       setEditOpen(false)
     } catch (error) {
-      console.error("Error updating profile:", error)
+      console.error("Error updating profile:", error);
       toast({
-        title: "Error saving changes",
-        description: "Please try again later",
+        title: "Error",
+        description: "Failed to update profile. Please try again.",
         variant: "destructive",
-      })
+      });
     } finally {
       setSaving(false)
     }
@@ -1150,83 +1154,146 @@ export default function ProfilePage() {
 
         {/* Edit Profile Dialog */}
         <Dialog open={editOpen} onOpenChange={setEditOpen}>
-          <DialogContent className="sm:max-w-2xl bg-gray-900 border-gray-800 rounded-2xl overflow-hidden">
+          <DialogContent className="bg-gray-900 border border-gray-800 text-white sm:max-w-md">
             <DialogHeader>
-              <DialogTitle className="text-purple-300">Edit Profile</DialogTitle>
+              <DialogTitle className="text-2xl text-purple-300 flex items-center gap-2">
+                <Edit className="h-5 w-5" /> Edit Profile
+              </DialogTitle>
+              <DialogDescription className="text-purple-400">
+                Update your profile information and photo
+              </DialogDescription>
             </DialogHeader>
-            <div className="grid gap-6 py-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            
+            <form className="space-y-4">
+              <div className="flex flex-col items-center justify-center pb-2">                <CloudinaryUploadWidget
+                  onUpload={(url) => {
+                    setAvatarUrl(url);
+                    // Update formData with the new avatar URL
+                    setFormData(prevData => ({
+                      ...prevData,
+                      avatar: url
+                    }));
+                  }}
+                  value={avatarUrl || profile.avatar}
+                  disabled={saving}
+                />
+              </div>
+              
+              <div className="space-y-4">
                 <div className="space-y-2">
-                  <label htmlFor="name" className="text-sm font-medium text-purple-300">
-                    Full Name
-                  </label>
+                  <Label htmlFor="name" className="text-purple-300">
+                    Display Name
+                  </Label>
                   <Input
                     id="name"
-                    value={editData.name || ''}
-                    onChange={(e) => handleEditChange('name', e.target.value)}
-                    className="bg-gray-800 border-gray-700 text-purple-100"
+                    placeholder="Your name"
+                    className="border-gray-700 bg-gray-800 text-white focus:ring-purple-500"
+                    defaultValue={profile.name}
+                    onChange={(e) => setFormData({...formData, name: e.target.value})}
+                    disabled={saving}
                   />
                 </div>
+                
                 <div className="space-y-2">
-                  <label htmlFor="title" className="text-sm font-medium text-purple-300">
-                    Professional Title
-                  </label>
+                  <Label htmlFor="title" className="text-purple-300">
+                    Title / Role
+                  </Label>
                   <Input
                     id="title"
-                    value={editData.title || ''}
-                    onChange={(e) => handleEditChange('title', e.target.value)}
-                    className="bg-gray-800 border-gray-700 text-purple-100"
+                    placeholder="e.g. UI Designer, Developer, etc."
+                    className="border-gray-700 bg-gray-800 text-white focus:ring-purple-500"
+                    defaultValue={profile.profile?.title || ""}
+                    onChange={(e) => setFormData({...formData, title: e.target.value})}
+                    disabled={saving}
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="location" className="text-purple-300">
+                    Location
+                  </Label>
+                  <Input
+                    id="location"
+                    placeholder="City, Country or Remote"
+                    className="border-gray-700 bg-gray-800 text-white focus:ring-purple-500"
+                    defaultValue={profile.profile?.location || "Remote"}
+                    onChange={(e) => setFormData({...formData, location: e.target.value})}
+                    disabled={saving}
+                  />
+                </div>
+                
+                <div className="space-y-2">
+                  <Label htmlFor="bio" className="text-purple-300">
+                    Bio
+                  </Label>
+                  <Textarea
+                    id="bio"
+                    placeholder="Tell us about yourself"
+                    className="min-h-[100px] border-gray-700 bg-gray-800 text-white focus:ring-purple-500"
+                    defaultValue={profile.profile?.bio || ""}
+                    onChange={(e) => setFormData({...formData, bio: e.target.value})}
+                    disabled={saving}
                   />
                 </div>
               </div>
-              <div className="space-y-2">
-                <label htmlFor="location" className="text-sm font-medium text-purple-300">
-                  Location
-                </label>
-                <Input
-                  id="location"
-                  value={editData.location || ''}
-                  onChange={(e) => handleEditChange('location', e.target.value)}
-                  className="bg-gray-800 border-gray-700 text-purple-100"
-                />
-              </div>
-              <div className="space-y-2">
-                <label htmlFor="bio" className="text-sm font-medium text-purple-300">
-                  Bio
-                </label>
-                <Textarea
-                  id="bio"
-                  value={editData.bio || ''}
-                  onChange={(e) => handleEditChange('bio', e.target.value)}
-                  className="bg-gray-800 border-gray-700 text-purple-100 min-h-[120px]"
-                  placeholder="Tell clients about yourself, your experience, and your creative approach..."
-                />
-              </div>
-            </div>
-            <DialogFooter>
-              <Button 
-                variant="outline" 
-                className="border-gray-700 text-purple-300 hover:bg-gray-800"
-                onClick={() => setEditOpen(false)}
-              >
-                Cancel
-              </Button>
-              <Button 
-                onClick={handleSaveChanges}
-                disabled={saving}
-                className="bg-purple-700 hover:bg-purple-600"
-              >
-                {saving ? (
-                  <div className="flex items-center gap-2">
-                    <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Saving...
-                  </div>
-                ) : 'Save Changes'}
-              </Button>
-            </DialogFooter>
+              
+              <DialogFooter>
+                <Button 
+                  variant="outline" 
+                  onClick={() => setEditOpen(false)}
+                  className="border-gray-700 bg-transparent text-gray-300 hover:bg-gray-800"
+                  disabled={saving}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="button"
+                  className="bg-gradient-to-r from-purple-600 to-purple-800 text-white hover:from-purple-500 hover:to-purple-700"
+                  onClick={async () => {
+                    try {
+                      // Update profile with cloudinary image
+                      await updateProfile.mutateAsync({
+                        name: formData.name || profile.name,
+                        avatar: avatarUrl || profile.avatar,
+                        profile: {
+                          title: formData.title,
+                          location: formData.location,
+                          bio: formData.bio,
+                        }
+                      });
+                      
+                      // Show success animations
+                      setShowConfetti(true);
+                      setTimeout(() => setShowConfetti(false), 3000);
+                      showXPAnimation(50);
+                      
+                      // Close the dialog
+                      setEditOpen(false);
+                      
+                      toast({
+                        title: "Profile updated!",
+                        description: "Your changes have been saved successfully",
+                        variant: "default",
+                      });
+                    } catch (error) {
+                      console.error("Error updating profile:", error);
+                      toast({
+                        title: "Error saving changes",
+                        description: "Please try again later",
+                        variant: "destructive",
+                      });
+                    }
+                  }}
+                  disabled={saving}
+                >
+                  {saving ? (
+                    <span className="flex items-center gap-2">
+                      <Loader2 className="h-4 w-4 animate-spin" /> Saving...
+                    </span>
+                  ) : "Save Changes"}
+                </Button>
+              </DialogFooter>
+            </form>
           </DialogContent>
         </Dialog>
       </div>
