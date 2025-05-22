@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { signIn } from '../../[...nextauth]/auth';
+import { signIn } from '../[...nextauth]/auth';
 
 export async function POST(request: NextRequest) {
   try {
