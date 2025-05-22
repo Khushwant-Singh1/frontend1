@@ -315,8 +315,8 @@ export namespace Prisma {
   export import Exact = $Public.Exact
 
   /**
-   * Prisma Client JS version: 6.7.0
-   * Query Engine version: 3cff47a7f5d65c3ea74883f1d736e41d68ce91ed
+   * Prisma Client JS version: 6.8.2
+   * Query Engine version: 2060c79ba17c6bb9f5823312b6f6b7f4a845738e
    */
   export type PrismaVersion = {
     client: string
@@ -2834,30 +2834,28 @@ export namespace Prisma {
   export type ProfileMinAggregateOutputType = {
     id: string | null
     userId: string | null
-    title: string | null
-    location: string | null
     bio: string | null
     xp: number | null
     level: number | null
     streak: number | null
+    title: string | null
+    location: string | null
   }
 
   export type ProfileMaxAggregateOutputType = {
     id: string | null
     userId: string | null
-    title: string | null
-    location: string | null
     bio: string | null
     xp: number | null
     level: number | null
     streak: number | null
+    title: string | null
+    location: string | null
   }
 
   export type ProfileCountAggregateOutputType = {
     id: number
     userId: number
-    title: number
-    location: number
     bio: number
     skills: number
     portfolio: number
@@ -2865,6 +2863,8 @@ export namespace Prisma {
     level: number
     streak: number
     endorsements: number
+    title: number
+    location: number
     _all: number
   }
 
@@ -2884,30 +2884,28 @@ export namespace Prisma {
   export type ProfileMinAggregateInputType = {
     id?: true
     userId?: true
-    title?: true
-    location?: true
     bio?: true
     xp?: true
     level?: true
     streak?: true
+    title?: true
+    location?: true
   }
 
   export type ProfileMaxAggregateInputType = {
     id?: true
     userId?: true
-    title?: true
-    location?: true
     bio?: true
     xp?: true
     level?: true
     streak?: true
+    title?: true
+    location?: true
   }
 
   export type ProfileCountAggregateInputType = {
     id?: true
     userId?: true
-    title?: true
-    location?: true
     bio?: true
     skills?: true
     portfolio?: true
@@ -2915,6 +2913,8 @@ export namespace Prisma {
     level?: true
     streak?: true
     endorsements?: true
+    title?: true
+    location?: true
     _all?: true
   }
 
@@ -3007,8 +3007,6 @@ export namespace Prisma {
   export type ProfileGroupByOutputType = {
     id: string
     userId: string
-    title: string | null
-    location: string | null
     bio: string | null
     skills: string[]
     portfolio: string[]
@@ -3016,6 +3014,8 @@ export namespace Prisma {
     level: number
     streak: number
     endorsements: string[]
+    title: string | null
+    location: string | null
     _count: ProfileCountAggregateOutputType | null
     _avg: ProfileAvgAggregateOutputType | null
     _sum: ProfileSumAggregateOutputType | null
@@ -3040,8 +3040,6 @@ export namespace Prisma {
   export type ProfileSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     userId?: boolean
-    title?: boolean
-    location?: boolean
     bio?: boolean
     skills?: boolean
     portfolio?: boolean
@@ -3049,6 +3047,8 @@ export namespace Prisma {
     level?: boolean
     streak?: boolean
     endorsements?: boolean
+    title?: boolean
+    location?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
     achievements?: boolean | Profile$achievementsArgs<ExtArgs>
     _count?: boolean | ProfileCountOutputTypeDefaultArgs<ExtArgs>
@@ -3059,8 +3059,6 @@ export namespace Prisma {
   export type ProfileSelectScalar = {
     id?: boolean
     userId?: boolean
-    title?: boolean
-    location?: boolean
     bio?: boolean
     skills?: boolean
     portfolio?: boolean
@@ -3068,9 +3066,11 @@ export namespace Prisma {
     level?: boolean
     streak?: boolean
     endorsements?: boolean
+    title?: boolean
+    location?: boolean
   }
 
-  export type ProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "title" | "location" | "bio" | "skills" | "portfolio" | "xp" | "level" | "streak" | "endorsements", ExtArgs["result"]["profile"]>
+  export type ProfileOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "bio" | "skills" | "portfolio" | "xp" | "level" | "streak" | "endorsements" | "title" | "location", ExtArgs["result"]["profile"]>
   export type ProfileInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     achievements?: boolean | Profile$achievementsArgs<ExtArgs>
@@ -3086,8 +3086,6 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       userId: string
-      title: string | null
-      location: string | null
       bio: string | null
       skills: string[]
       portfolio: string[]
@@ -3095,6 +3093,8 @@ export namespace Prisma {
       level: number
       streak: number
       endorsements: string[]
+      title: string | null
+      location: string | null
     }, ExtArgs["result"]["profile"]>
     composites: {}
   }
@@ -3491,8 +3491,6 @@ export namespace Prisma {
   interface ProfileFieldRefs {
     readonly id: FieldRef<"Profile", 'String'>
     readonly userId: FieldRef<"Profile", 'String'>
-    readonly title: FieldRef<"Profile", 'String'>
-    readonly location: FieldRef<"Profile", 'String'>
     readonly bio: FieldRef<"Profile", 'String'>
     readonly skills: FieldRef<"Profile", 'String[]'>
     readonly portfolio: FieldRef<"Profile", 'String[]'>
@@ -3500,6 +3498,8 @@ export namespace Prisma {
     readonly level: FieldRef<"Profile", 'Int'>
     readonly streak: FieldRef<"Profile", 'Int'>
     readonly endorsements: FieldRef<"Profile", 'String[]'>
+    readonly title: FieldRef<"Profile", 'String'>
+    readonly location: FieldRef<"Profile", 'String'>
   }
     
 
@@ -9967,15 +9967,15 @@ export namespace Prisma {
   export const ProfileScalarFieldEnum: {
     id: 'id',
     userId: 'userId',
-    title: 'title',
-    location: 'location',
     bio: 'bio',
     skills: 'skills',
     portfolio: 'portfolio',
     xp: 'xp',
     level: 'level',
     streak: 'streak',
-    endorsements: 'endorsements'
+    endorsements: 'endorsements',
+    title: 'title',
+    location: 'location'
   };
 
   export type ProfileScalarFieldEnum = (typeof ProfileScalarFieldEnum)[keyof typeof ProfileScalarFieldEnum]
@@ -10258,8 +10258,6 @@ export namespace Prisma {
     NOT?: ProfileWhereInput | ProfileWhereInput[]
     id?: StringFilter<"Profile"> | string
     userId?: StringFilter<"Profile"> | string
-    title?: StringNullableFilter<"Profile"> | string | null
-    location?: StringNullableFilter<"Profile"> | string | null
     bio?: StringNullableFilter<"Profile"> | string | null
     skills?: StringNullableListFilter<"Profile">
     portfolio?: StringNullableListFilter<"Profile">
@@ -10267,6 +10265,8 @@ export namespace Prisma {
     level?: IntFilter<"Profile"> | number
     streak?: IntFilter<"Profile"> | number
     endorsements?: StringNullableListFilter<"Profile">
+    title?: StringNullableFilter<"Profile"> | string | null
+    location?: StringNullableFilter<"Profile"> | string | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     achievements?: AchievementListRelationFilter
   }
@@ -10274,8 +10274,6 @@ export namespace Prisma {
   export type ProfileOrderByWithRelationInput = {
     id?: SortOrder
     userId?: SortOrder
-    title?: SortOrder
-    location?: SortOrder
     bio?: SortOrder
     skills?: SortOrder
     portfolio?: SortOrder
@@ -10283,6 +10281,8 @@ export namespace Prisma {
     level?: SortOrder
     streak?: SortOrder
     endorsements?: SortOrder
+    title?: SortOrder
+    location?: SortOrder
     user?: UserOrderByWithRelationInput
     achievements?: AchievementOrderByRelationAggregateInput
   }
@@ -10293,8 +10293,6 @@ export namespace Prisma {
     AND?: ProfileWhereInput | ProfileWhereInput[]
     OR?: ProfileWhereInput[]
     NOT?: ProfileWhereInput | ProfileWhereInput[]
-    title?: StringNullableFilter<"Profile"> | string | null
-    location?: StringNullableFilter<"Profile"> | string | null
     bio?: StringNullableFilter<"Profile"> | string | null
     skills?: StringNullableListFilter<"Profile">
     portfolio?: StringNullableListFilter<"Profile">
@@ -10302,6 +10300,8 @@ export namespace Prisma {
     level?: IntFilter<"Profile"> | number
     streak?: IntFilter<"Profile"> | number
     endorsements?: StringNullableListFilter<"Profile">
+    title?: StringNullableFilter<"Profile"> | string | null
+    location?: StringNullableFilter<"Profile"> | string | null
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
     achievements?: AchievementListRelationFilter
   }, "id" | "userId">
@@ -10309,8 +10309,6 @@ export namespace Prisma {
   export type ProfileOrderByWithAggregationInput = {
     id?: SortOrder
     userId?: SortOrder
-    title?: SortOrder
-    location?: SortOrder
     bio?: SortOrder
     skills?: SortOrder
     portfolio?: SortOrder
@@ -10318,6 +10316,8 @@ export namespace Prisma {
     level?: SortOrder
     streak?: SortOrder
     endorsements?: SortOrder
+    title?: SortOrder
+    location?: SortOrder
     _count?: ProfileCountOrderByAggregateInput
     _avg?: ProfileAvgOrderByAggregateInput
     _max?: ProfileMaxOrderByAggregateInput
@@ -10331,8 +10331,6 @@ export namespace Prisma {
     NOT?: ProfileScalarWhereWithAggregatesInput | ProfileScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Profile"> | string
     userId?: StringWithAggregatesFilter<"Profile"> | string
-    title?: StringNullableWithAggregatesFilter<"Profile"> | string | null
-    location?: StringNullableWithAggregatesFilter<"Profile"> | string | null
     bio?: StringNullableWithAggregatesFilter<"Profile"> | string | null
     skills?: StringNullableListFilter<"Profile">
     portfolio?: StringNullableListFilter<"Profile">
@@ -10340,6 +10338,8 @@ export namespace Prisma {
     level?: IntWithAggregatesFilter<"Profile"> | number
     streak?: IntWithAggregatesFilter<"Profile"> | number
     endorsements?: StringNullableListFilter<"Profile">
+    title?: StringNullableWithAggregatesFilter<"Profile"> | string | null
+    location?: StringNullableWithAggregatesFilter<"Profile"> | string | null
   }
 
   export type ProjectWhereInput = {
@@ -10808,8 +10808,6 @@ export namespace Prisma {
 
   export type ProfileCreateInput = {
     id?: string
-    title?: string | null
-    location?: string | null
     bio?: string | null
     skills?: ProfileCreateskillsInput | string[]
     portfolio?: ProfileCreateportfolioInput | string[]
@@ -10817,6 +10815,8 @@ export namespace Prisma {
     level?: number
     streak?: number
     endorsements?: ProfileCreateendorsementsInput | string[]
+    title?: string | null
+    location?: string | null
     user: UserCreateNestedOneWithoutProfileInput
     achievements?: AchievementCreateNestedManyWithoutProfileInput
   }
@@ -10824,8 +10824,6 @@ export namespace Prisma {
   export type ProfileUncheckedCreateInput = {
     id?: string
     userId: string
-    title?: string | null
-    location?: string | null
     bio?: string | null
     skills?: ProfileCreateskillsInput | string[]
     portfolio?: ProfileCreateportfolioInput | string[]
@@ -10833,12 +10831,12 @@ export namespace Prisma {
     level?: number
     streak?: number
     endorsements?: ProfileCreateendorsementsInput | string[]
+    title?: string | null
+    location?: string | null
     achievements?: AchievementUncheckedCreateNestedManyWithoutProfileInput
   }
 
   export type ProfileUpdateInput = {
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: ProfileUpdateskillsInput | string[]
     portfolio?: ProfileUpdateportfolioInput | string[]
@@ -10846,14 +10844,14 @@ export namespace Prisma {
     level?: IntFieldUpdateOperationsInput | number
     streak?: IntFieldUpdateOperationsInput | number
     endorsements?: ProfileUpdateendorsementsInput | string[]
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneRequiredWithoutProfileNestedInput
     achievements?: AchievementUpdateManyWithoutProfileNestedInput
   }
 
   export type ProfileUncheckedUpdateInput = {
     userId?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: ProfileUpdateskillsInput | string[]
     portfolio?: ProfileUpdateportfolioInput | string[]
@@ -10861,14 +10859,14 @@ export namespace Prisma {
     level?: IntFieldUpdateOperationsInput | number
     streak?: IntFieldUpdateOperationsInput | number
     endorsements?: ProfileUpdateendorsementsInput | string[]
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
     achievements?: AchievementUncheckedUpdateManyWithoutProfileNestedInput
   }
 
   export type ProfileCreateManyInput = {
     id?: string
     userId: string
-    title?: string | null
-    location?: string | null
     bio?: string | null
     skills?: ProfileCreateskillsInput | string[]
     portfolio?: ProfileCreateportfolioInput | string[]
@@ -10876,11 +10874,11 @@ export namespace Prisma {
     level?: number
     streak?: number
     endorsements?: ProfileCreateendorsementsInput | string[]
+    title?: string | null
+    location?: string | null
   }
 
   export type ProfileUpdateManyMutationInput = {
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: ProfileUpdateskillsInput | string[]
     portfolio?: ProfileUpdateportfolioInput | string[]
@@ -10888,12 +10886,12 @@ export namespace Prisma {
     level?: IntFieldUpdateOperationsInput | number
     streak?: IntFieldUpdateOperationsInput | number
     endorsements?: ProfileUpdateendorsementsInput | string[]
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ProfileUncheckedUpdateManyInput = {
     userId?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: ProfileUpdateskillsInput | string[]
     portfolio?: ProfileUpdateportfolioInput | string[]
@@ -10901,6 +10899,8 @@ export namespace Prisma {
     level?: IntFieldUpdateOperationsInput | number
     streak?: IntFieldUpdateOperationsInput | number
     endorsements?: ProfileUpdateendorsementsInput | string[]
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ProjectCreateInput = {
@@ -11483,8 +11483,6 @@ export namespace Prisma {
   export type ProfileCountOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
-    title?: SortOrder
-    location?: SortOrder
     bio?: SortOrder
     skills?: SortOrder
     portfolio?: SortOrder
@@ -11492,6 +11490,8 @@ export namespace Prisma {
     level?: SortOrder
     streak?: SortOrder
     endorsements?: SortOrder
+    title?: SortOrder
+    location?: SortOrder
   }
 
   export type ProfileAvgOrderByAggregateInput = {
@@ -11503,23 +11503,23 @@ export namespace Prisma {
   export type ProfileMaxOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
-    title?: SortOrder
-    location?: SortOrder
     bio?: SortOrder
     xp?: SortOrder
     level?: SortOrder
     streak?: SortOrder
+    title?: SortOrder
+    location?: SortOrder
   }
 
   export type ProfileMinOrderByAggregateInput = {
     id?: SortOrder
     userId?: SortOrder
-    title?: SortOrder
-    location?: SortOrder
     bio?: SortOrder
     xp?: SortOrder
     level?: SortOrder
     streak?: SortOrder
+    title?: SortOrder
+    location?: SortOrder
   }
 
   export type ProfileSumOrderByAggregateInput = {
@@ -12496,8 +12496,6 @@ export namespace Prisma {
 
   export type ProfileCreateWithoutUserInput = {
     id?: string
-    title?: string | null
-    location?: string | null
     bio?: string | null
     skills?: ProfileCreateskillsInput | string[]
     portfolio?: ProfileCreateportfolioInput | string[]
@@ -12505,13 +12503,13 @@ export namespace Prisma {
     level?: number
     streak?: number
     endorsements?: ProfileCreateendorsementsInput | string[]
+    title?: string | null
+    location?: string | null
     achievements?: AchievementCreateNestedManyWithoutProfileInput
   }
 
   export type ProfileUncheckedCreateWithoutUserInput = {
     id?: string
-    title?: string | null
-    location?: string | null
     bio?: string | null
     skills?: ProfileCreateskillsInput | string[]
     portfolio?: ProfileCreateportfolioInput | string[]
@@ -12519,6 +12517,8 @@ export namespace Prisma {
     level?: number
     streak?: number
     endorsements?: ProfileCreateendorsementsInput | string[]
+    title?: string | null
+    location?: string | null
     achievements?: AchievementUncheckedCreateNestedManyWithoutProfileInput
   }
 
@@ -12637,8 +12637,6 @@ export namespace Prisma {
   }
 
   export type ProfileUpdateWithoutUserInput = {
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: ProfileUpdateskillsInput | string[]
     portfolio?: ProfileUpdateportfolioInput | string[]
@@ -12646,12 +12644,12 @@ export namespace Prisma {
     level?: IntFieldUpdateOperationsInput | number
     streak?: IntFieldUpdateOperationsInput | number
     endorsements?: ProfileUpdateendorsementsInput | string[]
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
     achievements?: AchievementUpdateManyWithoutProfileNestedInput
   }
 
   export type ProfileUncheckedUpdateWithoutUserInput = {
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: ProfileUpdateskillsInput | string[]
     portfolio?: ProfileUpdateportfolioInput | string[]
@@ -12659,6 +12657,8 @@ export namespace Prisma {
     level?: IntFieldUpdateOperationsInput | number
     streak?: IntFieldUpdateOperationsInput | number
     endorsements?: ProfileUpdateendorsementsInput | string[]
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
     achievements?: AchievementUncheckedUpdateManyWithoutProfileNestedInput
   }
 
@@ -13382,8 +13382,6 @@ export namespace Prisma {
 
   export type ProfileCreateWithoutAchievementsInput = {
     id?: string
-    title?: string | null
-    location?: string | null
     bio?: string | null
     skills?: ProfileCreateskillsInput | string[]
     portfolio?: ProfileCreateportfolioInput | string[]
@@ -13391,14 +13389,14 @@ export namespace Prisma {
     level?: number
     streak?: number
     endorsements?: ProfileCreateendorsementsInput | string[]
+    title?: string | null
+    location?: string | null
     user: UserCreateNestedOneWithoutProfileInput
   }
 
   export type ProfileUncheckedCreateWithoutAchievementsInput = {
     id?: string
     userId: string
-    title?: string | null
-    location?: string | null
     bio?: string | null
     skills?: ProfileCreateskillsInput | string[]
     portfolio?: ProfileCreateportfolioInput | string[]
@@ -13406,6 +13404,8 @@ export namespace Prisma {
     level?: number
     streak?: number
     endorsements?: ProfileCreateendorsementsInput | string[]
+    title?: string | null
+    location?: string | null
   }
 
   export type ProfileCreateOrConnectWithoutAchievementsInput = {
@@ -13425,8 +13425,6 @@ export namespace Prisma {
   }
 
   export type ProfileUpdateWithoutAchievementsInput = {
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: ProfileUpdateskillsInput | string[]
     portfolio?: ProfileUpdateportfolioInput | string[]
@@ -13434,13 +13432,13 @@ export namespace Prisma {
     level?: IntFieldUpdateOperationsInput | number
     streak?: IntFieldUpdateOperationsInput | number
     endorsements?: ProfileUpdateendorsementsInput | string[]
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
     user?: UserUpdateOneRequiredWithoutProfileNestedInput
   }
 
   export type ProfileUncheckedUpdateWithoutAchievementsInput = {
     userId?: StringFieldUpdateOperationsInput | string
-    title?: NullableStringFieldUpdateOperationsInput | string | null
-    location?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     skills?: ProfileUpdateskillsInput | string[]
     portfolio?: ProfileUpdateportfolioInput | string[]
@@ -13448,6 +13446,8 @@ export namespace Prisma {
     level?: IntFieldUpdateOperationsInput | number
     streak?: IntFieldUpdateOperationsInput | number
     endorsements?: ProfileUpdateendorsementsInput | string[]
+    title?: NullableStringFieldUpdateOperationsInput | string | null
+    location?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ProjectCreateManyClientInput = {

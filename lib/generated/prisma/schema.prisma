@@ -35,8 +35,6 @@ model User {
 model Profile {
   id           String        @id @default(auto()) @map("_id") @db.ObjectId
   userId       String        @unique @db.ObjectId
-  title        String?
-  location     String?
   bio          String?
   skills       String[]
   portfolio    String[]
@@ -44,6 +42,8 @@ model Profile {
   level        Int           @default(1)
   streak       Int           @default(0)
   endorsements String[]      @default([])
+  title        String? // <-- Added title field
+  location     String? // <-- Added location field
   user         User          @relation(fields: [userId], references: [id])
   achievements Achievement[]
 
