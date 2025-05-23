@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, Suspense } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useSearchParams } from "next/navigation"
@@ -20,7 +20,7 @@ import { signupSchema, type SignupFormData } from "@/lib/validations/auth"
 import { Checkbox } from "@/components/ui/checkbox"
 import { useSignupMutation } from "@/hooks/use-mutations"
 
-export default function SignupPage() {
+function SignupForm() {
   const router = useRouter()
   const { toast } = useToast()
   const searchParams = useSearchParams()
@@ -354,5 +354,21 @@ export default function SignupPage() {
         </Form>
       </Card>
     </div>
+  )
+}
+
+export default function SignupPage() {
+  return (
+    <Suspense fallback={
+      <div className="container flex items-center justify-center min-h-[calc(100vh-8rem)] py-12">
+        <Card className="w-full max-w-lg">
+          <CardHeader className="space-y-1">
+            <CardTitle className="text-2xl">Loading...</CardTitle>
+          </CardHeader>
+        </Card>
+      </div>
+    }>
+      <SignupForm />
+    </Suspense>
   )
 }
